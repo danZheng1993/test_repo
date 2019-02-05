@@ -1,0 +1,1 @@
+export const apiUrl = 'http://data.fixer.io/api/latest?access_key=42d7b46a8bd91d098d827461c42ddf58';
