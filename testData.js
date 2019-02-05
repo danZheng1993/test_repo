@@ -23,9 +23,9 @@ export const parsedBalance = {
 };
 
 export const rates = {
-  USD:1.140921,
-  EUR:1,
-  CAD:1.498594,
+  USD: 1.140921,
+  EUR: 1,
+  CAD: 1.498594,
 };
 
 export const historyItems = [

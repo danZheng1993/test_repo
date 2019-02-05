@@ -72,7 +72,7 @@ export function* exchange(action) {
 export default function* ApplicationSaga() {
   yield takeEvery(actions.DepositAccount, deposit);
   yield takeEvery(actions.ExchangeBalance, exchange);
-  yield takeEvery(actions.WithdrawAcccount, widthdraw);
+  yield takeEvery(actions.WithdrawAccount, widthdraw);
   yield takeEvery(actions.AddAccount, addAccount);
   yield takeEvery(actions.RemoveAccount, removeAccount);
 }

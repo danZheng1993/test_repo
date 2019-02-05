@@ -8,9 +8,9 @@ import { AccountActionTypes as actions } from '../actions/account';
 
 const initialState = {
   balance: {
-    USD: { balance: 0 },
-    EUR: { balance: 0 },
-    CAD: { balance: 0 },
+    USD: { balance: 10 },
+    EUR: { balance: 10 },
+    CAD: { balance: 10 },
   },
   defaultCurrency: 'USD',
 }

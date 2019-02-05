@@ -25,8 +25,8 @@ export const getRate = (baseCurrency, targetCurrency, rates) => {
 export const getBalanceTotal = (balance, defaultCurrency, rates) => {
   const currencies = keys(balance);
   const balanceTotal = currencies.reduce((prev, currency) => {
-    const balance = get(balance, `${currency}.balance`, 0);
-    const targetBalance = convertCurrency(currency, defaultCurrency, balance, rates);
+    const vBalance = get(balance, `${currency}.balance`, 0);
+    const targetBalance = convertCurrency(currency, defaultCurrency, vBalance, rates);
     return prev + targetBalance;
   }, 0);
   return balanceTotal
@@ -36,10 +36,10 @@ export const convertAllBalance = (balance, defaultCurrency, rates) => {
   const currencies = keys(balance);
   const convertedBalance = {};
   currencies.forEach((currency) => {
-    const balance = get(balance, `${currency}.balance`, 0);
-    const targetBalance = convertCurrency(currency, defaultCurrency, balance, rates);
+    const vBalance = get(balance, `${currency}.balance`, 0);
+    const targetBalance = convertCurrency(currency, defaultCurrency, vBalance, rates);
     const conversionRate = getRate(currency, defaultCurrency, rates);
-    set(convertedBalance, `${currency}`, { balance, convertedValue: targetBalance, conversionRate });
+    set(convertedBalance, `${currency}`, { balance: vBalance, convertedValue: targetBalance, conversionRate });
   })
   return convertedBalance;
 }
