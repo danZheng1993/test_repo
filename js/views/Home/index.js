@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Animated, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import TouchID from  'react-native-touch-id';
 
 import { Authenticate } from '../../store/actions/auth';
 import { FetchRate } from '../../store/actions/exchangeRate';

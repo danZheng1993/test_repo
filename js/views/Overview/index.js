@@ -1,16 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import PageTemplate from '../../components/pageTemplate';
+import PageTemplate from '../../components/PageTemplate';
+import TotalBalance from './components/TotalBalance';
+import BalanceOverview from './components/BalanceOverview';
 
 import { getConvertedBalance, getTotal, getDefaultCurrency } from '../../store/selector/account';
 
 class OverviewScreen extends React.Component {
   render() {
     const { balance, totalBalance, defaultCurrency } = this.props;
-    console.log(balance, totalBalance, defaultCurrency);
     return (
-      <PageTemplate />
+      <PageTemplate>
+        <TotalBalance currency={defaultCurrency} balance={totalBalance} />
+        <BalanceOverview balance={balance} defaultCurrency={defaultCurrency} />
+      </PageTemplate>
     );
   }
 }

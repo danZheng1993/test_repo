@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Item, Input, Button, Text } from 'native-base';
 
-import PageTemplate from '../../components/pageTemplate';
+import PageTemplate from '../../components/PageTemplate';
 import { Authenticate, Authorize } from '../../store/actions/auth';
 import { DispatchAction } from '../../store/actions/application';
 
