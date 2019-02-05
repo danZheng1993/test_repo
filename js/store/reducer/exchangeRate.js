@@ -4,7 +4,7 @@ import { produce } from 'immer';
 import { ExchangeRateActionTypes as actions } from '../actions/exchangeRate';
 
 const initialState = {
-  rates: [],
+  rates: {},
 }
 
 export default handleActions({

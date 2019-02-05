@@ -19,14 +19,14 @@ export default handleActions({
   [actions.DepositAccount]: (state, action) =>
     produce(state, draft => {
       const { currency, amount } = action.payload;
-      const balance = get(state, `balance.${currency}`, 0);
-      set(draft, `balance.${currency}`, parseFloat(balance) + parseFloat(amount));
+      const balance = get(state, `balance.${currency}.balance`, 0);
+      set(draft, `balance.${currency}.balance`, balance + amount);
     }),
-  [actions.WidthdrawAccount]: (state, action) =>
+  [actions.WithdrawAccount]: (state, action) =>
     produce(state, draft => {
       const { currency, amount } = action.payload;
-      const balance = get(state, `balance.${currency}`, 0);
-      set(draft, `balance.${currency}`, parseFloat(balance) - parseFloat(amount));
+      const balance = get(state, `balance.${currency}.balance`, 0);
+      set(draft, `balance.${currency}.balance`, balance - amount);
     }),
   [actions.RemoveAccount]: (state, action) =>
     produce(state, draft => {
@@ -39,7 +39,7 @@ export default handleActions({
     produce(state, draft => {
       const { currency } = action.payload;
       const initialAmount = get(action.payload, 'initialAmount', 0);
-      set(draft, `balance.${currency}`, initialAmount);
+      set(draft, `balance.${currency}.balance`, initialAmount);
     }),
   [actions.SetDefaultCurrency]: (state, action) =>
     produce(state, draft => {

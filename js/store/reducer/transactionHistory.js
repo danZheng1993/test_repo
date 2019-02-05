@@ -9,7 +9,7 @@ const initialState = {
 }
 
 export default handleActions({
-  [actions.AddHistory]: (state) =>
+  [actions.AddHistory]: (state, action) =>
     produce(state, draft => {
       const { transaction } = action.payload;
       const history = [...state.history];

@@ -6,7 +6,7 @@ import get from 'lodash.get';
 
 import BalanceInfo from './BalanceInfo';
 
-class BalanceOverview extends React.Component {
+export class BalanceOverview extends React.Component {
   parseBalance = () => {
     const { balance, defaultCurrency } = this.props;
     const result = [];

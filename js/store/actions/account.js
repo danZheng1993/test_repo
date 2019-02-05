@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions';
 
 export const AccountActionTypes = {
   DepositAccount: '[ACCOUNT] - DEPOSIT',
-  WidthdrawAccount: '[ACCOUNT] - WIDTHDRAW',
+  WithdrawAccount: '[ACCOUNT] - WITHDRAW',
   RemoveAccount: '[ACCOUNT] - REMOVE',
   AddAccount: '[ACCOUNT] - ADD',
   ExchangeBalance: '[ACCOUNT] - EXCHANGE',
@@ -11,7 +11,7 @@ export const AccountActionTypes = {
 }
 
 export const DepositAccount = createAction(AccountActionTypes.DepositAccount)
-export const WidthdrawAccount = createAction(AccountActionTypes.WidthdrawAccount)
+export const WithdrawAccount = createAction(AccountActionTypes.WithdrawAccount)
 export const RemoveAccount = createAction(AccountActionTypes.RemoveAccount)
 export const AddAccount = createAction(AccountActionTypes.AddAccount)
 export const ExchangeBalance = createAction(AccountActionTypes.ExchangeBalance)
