@@ -15,7 +15,6 @@ import {
   Form,
   Item,
   Input,
-  Picker,
   Label,
 } from 'native-base';
 import isEmpty from 'lodash.isempty';
@@ -24,36 +23,37 @@ import toNumber from 'lodash.tonumber';
 
 import Passcode from './Passcode';
 
-import { DepositAccount } from '../store/actions/account';
+import { AddAccount } from '../store/actions/account';
 import { Authorize } from '../store/actions/auth';
 import { getCurrencies, getDefaultCurrency } from '../store/selector/account';
 
-class DepositModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currency: props.defaultCurrency,
-      amount: '0.00',
-      showPasscode: false,
-    };
+class AddModal extends React.Component {
+  state = {
+    currency: '',
+    amount: '0.00',
+    showPasscode: false,
   }
 
   onConfirm = () => {
-    const { amount } = this.state;
+    const { amount, currency } = this.state;
     const amountInNum = toNumber(amount);
-    if (isNumber(amountInNum)) {
-      const currency = isEmpty(this.props.currency) ? this.state.currency : this.props.currency;
-      this.processPayment();
+    const { currencies } = this.props;
+    const pos = currencies.findIndex(val => val === currency);
+    if (pos >= 0 && isEmpty(currency)) {
+      Alert.alert('Invalid Account Info');
     } else {
-      Alert.alert('Invalid Amount');
+      if (isNumber(amountInNum)) {
+        this.processPayment();
+      } else {
+        Alert.alert('Invalid Amount');
+      }
     }
   }
 
   onSuccess = () => {
-    const { amount } = this.state;
+    const { amount, currency } = this.state;
     const amountInNum = toNumber(amount);
-    const currency = isEmpty(this.props.currency) ? this.state.currency : this.props.currency;
-    this.props.DepositAccount({ currency, amount: amountInNum });
+    this.props.AddAccount({ currency, initialAmount: amountInNum });
     this.props.onClose();
   }
 
@@ -78,42 +78,33 @@ class DepositModal extends React.Component {
   }
 
   render() {
-    const { onClose, show, currency, currencies } = this.props;
-    const { amount, showPasscode } = this.state;
+    const { onClose, show } = this.props;
+    const { amount, showPasscode, currency } = this.state;
     return (
       <React.Fragment>
         <Modal visible={show && !showPasscode} onClose={onClose} animationType="slide">
           <Container>
             <Header>
-              <Body><Title>Deposit to your account</Title></Body>
+              <Body><Title>Add to your account</Title></Body>
             </Header>
             <Content>
               <Form>
-                {
-                  isEmpty(currency) && (
-                    <Item>
-                      <Label>Currency</Label>
-                      <Picker
-                        placeholder="Select One"
-                        note
-                        mode="dropdown"
-                        selectedValue={this.state.currency}
-                        onValueChange={this.changeCurrency}
-                      >
-                        { currencies.map((currency, idx) => (
-                          <Picker.Item label={currency} value={currency} key={`value_${idx}`} />
-                        )) }
-                      </Picker>
-                    </Item>
-                  )
-                }
-                <Item last>
-                  <Label>Deposit Amount</Label>
+                <Item>
+                  <Label>Currency</Label>
                   <Input
-                    placeholder="10.00"
+                    value={currency}
+                    onChangeText={this.changeCurrency}
+                    placeholder="USD, CAD, ..."
                     placeholderTextColor="#8a8a8a"
+                  />
+                </Item>
+                <Item last>
+                  <Label>Add Amount</Label>
+                  <Input
                     value={amount}
                     onChangeText={this.changeAmount}
+                    placeholder="10.00"
+                    placeholderTextColor="#8a8a8a"
                   />
                 </Item>
               </Form>
@@ -135,14 +126,12 @@ class DepositModal extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  defaultCurrency: getDefaultCurrency(state),
   currencies: getCurrencies(state),
-  balance: state.account.balance,
 });
 
 const mapDispatchToProps = {
   Authorize,
-  DepositAccount
+  AddAccount
 };
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(DepositModal));
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(AddModal));

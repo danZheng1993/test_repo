@@ -112,7 +112,7 @@ class ExchangeModal extends React.Component {
                   isEmpty(currency) && (
                     <Item>
                       <Label>Base Currency</Label>
-                      <Picker note mode="dropdown" selectedValue={this.state.currency} onValueChange={this.changeCurrency} >
+                      <Picker placeholder="Select One" note mode="dropdown" selectedValue={this.state.currency} onValueChange={this.changeCurrency} >
                         { currencies.map((item, idx) => (
                           <Picker.Item label={item} value={item} key={`value_${idx}`} />
                         )) }
@@ -130,7 +130,12 @@ class ExchangeModal extends React.Component {
                 </Item>
                 <Item last>
                   <Label>Exchange Amount</Label>
-                  <Input placeholder="10.00" value={amount} onChangeText={this.changeAmount} />
+                  <Input
+                    placeholder="10.00"
+                    placeholderTextColor="#8a8a8a"
+                    value={amount}
+                    onChangeText={this.changeAmount}
+                  />
                 </Item>
               </Form>
             </Content>

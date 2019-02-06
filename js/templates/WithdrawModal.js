@@ -99,7 +99,7 @@ class WithdrawModal extends React.Component {
                   isEmpty(currency) && (
                     <Item>
                       <Label>Currency</Label>
-                      <Picker note mode="dropdown" selectedValue={this.state.currency} onValueChange={this.changeCurrency} >
+                      <Picker placeholder="Select One" note mode="dropdown" selectedValue={this.state.currency} onValueChange={this.changeCurrency} >
                         { currencies.map((currency, idx) => (
                           <Picker.Item label={currency} value={currency} key={`value_${idx}`} />
                         )) }
@@ -109,7 +109,7 @@ class WithdrawModal extends React.Component {
                 }
                 <Item last>
                   <Label>Withdraw Amount</Label>
-                  <Input placeholder="10.00" value={amount} onChangeText={this.changeAmount} />
+                  <Input placeholder="10.00" placeholderTextColor="#8a8a8a" value={amount} onChangeText={this.changeAmount} />
                 </Item>
               </Form>
             </Content>
