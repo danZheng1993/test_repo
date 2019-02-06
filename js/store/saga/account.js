@@ -1,8 +1,11 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, takeEvery, select } from 'redux-saga/effects';
 import get from 'lodash.get';
+import set from 'lodash.set';
 
 import { AccountActionTypes as actions } from '../actions/account';
 import { TransactionHistoryActionTypes as thActions } from '../actions/transactionHistory';
+import { convertCurrency } from '../../utils/currency';
+import { selectRates, selectBalance } from './selectors';
 
 export function* deposit(action) {
   const { currency, amount } = action.payload;
@@ -57,6 +60,17 @@ export function* removeAccount(action) {
 
 export function* exchange(action) {
   const { baseCurrency, targetCurrency, amount } = action.payload;
+  const rates = yield select(selectRates);
+  const balance = yield select(selectBalance);
+  const changingAmount = convertCurrency(baseCurrency, targetCurrency, amount, rates);
+  const baseAmount = get(balance, `${baseCurrency}.balance`, 0);
+  const targetAmount = get(balance, `${targetCurrency}.balance`, 0);
+  set(balance, `${baseCurrency}.balance`, baseAmount - amount);
+  set(balance, `${targetCurrency}.balance`, targetAmount + changingAmount);
+  yield put({
+    type: actions.SetExchangeResult,
+    payload: { balance }
+  })
   yield put({
     type: thActions.AddHistory,
     payload: {

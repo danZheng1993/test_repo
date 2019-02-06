@@ -8,3 +8,7 @@ export const selectCurrencies = (state) => {
 }
 
 export const selectDefaultCurrency = state => state.account.defaultCurrency;
+
+export const selectRates = state => state.exchangeRate.rates;
+
+export const selectBalance = state => state.account.balance;

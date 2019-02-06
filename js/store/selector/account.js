@@ -1,6 +1,9 @@
 import get from 'lodash.get';
+import keys from 'lodash.keys';
 
 import { convertAllBalance, getBalanceTotal } from '../../utils/currency';
+
+export const getCurrencies = state => keys(state.account.balance);
 
 export const getDefaultCurrency = state => get(state, 'account.defaultCurrency', 'USD');
 

@@ -19,17 +19,21 @@ export class BalanceOverview extends React.Component {
     });
     return result;
   }
+
   moveToDetail = (currency) => () => {
     this.props.navigation.navigate({
       routeName: 'CurrencyDetailScreen',
       params: { currency }
     })
   }
+
   keyExtractor = (item, idx) => `balance_${idx}`
+
   renderItem = ({ item }) => {
     const { defaultCurrency } = this.props;
     return <BalanceInfo {...item} defaultCurrency={defaultCurrency} onPress={this.moveToDetail(item.currency)} />
   }
+
   render() {
     const balance = this.parseBalance();
     return (

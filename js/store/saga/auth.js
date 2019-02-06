@@ -9,6 +9,7 @@ export function* authenticate(action) {
   if (type === 'TouchID') {
     try {
       const isSupported = yield call(TouchID.isSupported);
+      console.log(isSupported);
       if (isSupported === 'FaceID' || isSupported === 'TouchID') {
         const result = yield call(TouchID.authenticate);
         if (result) {
