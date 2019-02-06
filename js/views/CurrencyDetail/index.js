@@ -8,11 +8,11 @@ import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import PageTemplate from '../../components/PageTemplate';
 import Balance from './components/Balance';
 import ConversionRate from './components/ConversionRate';
+import TransactionHistory from '../../components/TransactionHistory';
 import DepositModal from '../../templates/DepositModal';
+import WithdrawModal from '../../templates/WithdrawModal';
 
 import { getConvertedBalance, getDefaultCurrency } from '../../store/selector/account';
-
-import TransactionHistory from '../../components/TransactionHistory';
 
 class CurrencyDetailScreen extends React.Component {
   state = {
@@ -103,7 +103,8 @@ class CurrencyDetailScreen extends React.Component {
           !isDefault && <ConversionRate conversionRate={conversionRate} convertedValue={convertedValue} defaultCurrency={defaultCurrency} />
         }
         <TransactionHistory history={history} />
-        <DepositModal show={showDeposit} onClose={this.closeModals} currency={currency} authorize={this.authorizeDeposit} />
+        <DepositModal show={showDeposit} onClose={this.closeModals} currency={currency} />
+        <WithdrawModal show={showWithdraw} onClose={this.closeModals} currency={currency} />
       </PageTemplate>
     );
   }
