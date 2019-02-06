@@ -11,6 +11,7 @@ import ConversionRate from './components/ConversionRate';
 import TransactionHistory from '../../components/TransactionHistory';
 import DepositModal from '../../templates/DepositModal';
 import WithdrawModal from '../../templates/WithdrawModal';
+import ExchangeModal from '../../templates/ExchangeModal';
 
 import { getConvertedBalance, getDefaultCurrency } from '../../store/selector/account';
 
@@ -74,8 +75,8 @@ class CurrencyDetailScreen extends React.Component {
             <Text>Withdraw</Text>
           </Button>
         </FooterTab>
-        <FooterTab onPress={this.exchange}>
-          <Button>
+        <FooterTab>
+          <Button onPress={this.exchange}>
             <Icon name="swap" />
             <Text>Exchange</Text>
           </Button>
@@ -105,6 +106,7 @@ class CurrencyDetailScreen extends React.Component {
         <TransactionHistory history={history} />
         <DepositModal show={showDeposit} onClose={this.closeModals} currency={currency} />
         <WithdrawModal show={showWithdraw} onClose={this.closeModals} currency={currency} />
+        <ExchangeModal show={showExchange} onClose={this.closeModals} currency={currency} />
       </PageTemplate>
     );
   }

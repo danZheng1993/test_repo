@@ -15,7 +15,8 @@ import {
   Form,
   Item,
   Input,
-  Picker
+  Picker,
+  Label,
 } from 'native-base';
 import isEmpty from 'lodash.isempty';
 import isNumber from 'lodash.isnumber';
@@ -46,8 +47,9 @@ class WithdrawModal extends React.Component {
       const { balance } = this.props;
       if (get(balance, `${currency}.balance`, 0) < amountInNum) {
         Alert.alert('Balance is not enough');
+      } else {
+        this.processPayment();
       }
-      this.processPayment();
     } else {
       Alert.alert('Invalid Amount');
     }
@@ -96,16 +98,18 @@ class WithdrawModal extends React.Component {
                 {
                   isEmpty(currency) && (
                     <Item>
+                      <Label>Currency</Label>
                       <Picker note mode="dropdown" selectedValue={this.state.currency} onValueChange={this.changeCurrency} >
                         { currencies.map((currency, idx) => (
-                          <Picker.Item lable={currency} value={currency} key={`value_${idx}`} />
+                          <Picker.Item label={currency} value={currency} key={`value_${idx}`} />
                         )) }
                       </Picker>
                     </Item>
                   )
                 }
                 <Item last>
-                  <Input placeholder="Withdraw Amount" value={amount} onChangeText={this.changeAmount} />
+                  <Label>Withdraw Amount</Label>
+                  <Input placeholder="10.00" value={amount} onChangeText={this.changeAmount} />
                 </Item>
               </Form>
             </Content>

@@ -21,20 +21,22 @@ import {
 import isEmpty from 'lodash.isempty';
 import isNumber from 'lodash.isnumber';
 import toNumber from 'lodash.tonumber';
+import get from 'lodash.get';
 
 import Passcode from './Passcode';
 
-import { DepositAccount } from '../store/actions/account';
+import { ExchangeBalance } from '../store/actions/account';
 import { Authorize } from '../store/actions/auth';
 import { getCurrencies, getDefaultCurrency } from '../store/selector/account';
 
-class DepositModal extends React.Component {
+class ExchangeModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currency: props.defaultCurrency,
       amount: '0.00',
       showPasscode: false,
+      targetCurrency: null,
     };
   }
 
@@ -43,22 +45,33 @@ class DepositModal extends React.Component {
     const amountInNum = toNumber(amount);
     if (isNumber(amountInNum)) {
       const currency = isEmpty(this.props.currency) ? this.state.currency : this.props.currency;
-      this.processPayment();
+      const { balance } = this.props;
+      if (get(balance, `${currency}.balance`, 0) < amountInNum) {
+        Alert.alert('Balance is not enough');
+      } else {
+        this.processPayment();
+      }
     } else {
       Alert.alert('Invalid Amount');
     }
   }
 
   onSuccess = () => {
-    const { amount } = this.state;
+    const { amount, targetCurrency } = this.state;
     const amountInNum = toNumber(amount);
     const currency = isEmpty(this.props.currency) ? this.state.currency : this.props.currency;
-    this.props.DepositAccount({ currency, amount: amountInNum });
+    this.props.ExchangeBalance({ baseCurrency: currency, targetCurrency, amount: amountInNum });
     this.props.onClose();
   }
 
   onTouchIDFailure = () => {
     this.setState({ showPasscode: true });
+  }
+
+  getSelectableCurrencies = () => {
+    const { currencies } = this.props;
+    const currency = isEmpty(this.props.currency) ? this.state.currency : this.props.currency;
+    return currencies.filter(item => item !== currency);
   }
 
   processPayment = (currency, amount) => {
@@ -67,6 +80,11 @@ class DepositModal extends React.Component {
 
   changeAmount = (amount) => {
     this.setState({ amount });
+  }
+
+  changeTargetCurrency = (targetCurrency) => {
+    console.log(targetCurrency);
+    this.setState({ targetCurrency })
   }
 
   changeCurrency = (currency) => {
@@ -80,29 +98,38 @@ class DepositModal extends React.Component {
   render() {
     const { onClose, show, currency, currencies } = this.props;
     const { amount, showPasscode } = this.state;
+    const selectableCurrencies = this.getSelectableCurrencies();
     return (
       <React.Fragment>
         <Modal visible={show && !showPasscode} onClose={onClose} animationType="slide">
           <Container>
             <Header>
-              <Body><Title>Deposit to your account</Title></Body>
+              <Body><Title>Exchange Currency</Title></Body>
             </Header>
             <Content>
               <Form>
                 {
                   isEmpty(currency) && (
                     <Item>
-                      <Label>Currency</Label>
+                      <Label>Base Currency</Label>
                       <Picker note mode="dropdown" selectedValue={this.state.currency} onValueChange={this.changeCurrency} >
-                        { currencies.map((currency, idx) => (
-                          <Picker.Item label={currency} value={currency} key={`value_${idx}`} />
+                        { currencies.map((item, idx) => (
+                          <Picker.Item label={item} value={item} key={`value_${idx}`} />
                         )) }
                       </Picker>
                     </Item>
                   )
                 }
+                <Item>
+                  <Label>Target Currency</Label>
+                  <Picker placeholder="Select One" note mode="dropdown" selectedValue={this.state.targetCurrency} onValueChange={this.changeTargetCurrency} >
+                    { selectableCurrencies.map((item, idx) => (
+                      <Picker.Item label={item} value={item} key={`value_${idx}`} />
+                    )) }
+                  </Picker>
+                </Item>
                 <Item last>
-                  <Label>Deposit Amount</Label>
+                  <Label>Exchange Amount</Label>
                   <Input placeholder="10.00" value={amount} onChangeText={this.changeAmount} />
                 </Item>
               </Form>
@@ -131,7 +158,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   Authorize,
-  DepositAccount
+  ExchangeBalance
 };
 
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(DepositModal));
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(ExchangeModal));
