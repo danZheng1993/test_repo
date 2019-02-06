@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import get from 'lodash.get';
 import takeRight from 'lodash.takeright';
-import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 
 import PageTemplate from '../../components/PageTemplate';
+import Footer from '../../components/Footer'
 import Balance from './components/Balance';
 import ConversionRate from './components/ConversionRate';
 import TransactionHistory from '../../components/TransactionHistory';
@@ -62,26 +62,11 @@ class CurrencyDetailScreen extends React.Component {
 
   renderFooter = () => {
     return (
-      <Footer>
-        <FooterTab>
-          <Button onPress={this.deposit}>
-            <Icon name="arrow-round-up" />
-            <Text>Deposit</Text>
-          </Button>
-        </FooterTab>
-        <FooterTab>
-          <Button onPress={this.withdraw}>
-            <Icon name="arrow-round-down" />
-            <Text>Withdraw</Text>
-          </Button>
-        </FooterTab>
-        <FooterTab>
-          <Button onPress={this.exchange}>
-            <Icon name="swap" />
-            <Text>Exchange</Text>
-          </Button>
-        </FooterTab>
-      </Footer>
+      <Footer
+        onDeposit={this.deposit}
+        onWithdraw={this.withdraw}
+        onExchange={this.exchange}
+      />
     )
   }
 

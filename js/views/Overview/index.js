@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 
 import PageTemplate from '../../components/PageTemplate';
+import Footer from '../../components/Footer';
 import TotalBalance from './components/TotalBalance';
 import BalanceOverview from './components/BalanceOverview';
 import DepositModal from '../../templates/DepositModal';
@@ -42,32 +42,12 @@ class OverviewScreen extends React.Component {
 
   renderFooter = () => {
     return (
-      <Footer>
-        <FooterTab>
-          <Button onPress={this.addAccount}>
-            <Icon name="add" />
-            <Text>New</Text>
-          </Button>
-        </FooterTab>
-        <FooterTab>
-          <Button onPress={this.deposit}>
-            <Icon name="arrow-round-up" />
-            <Text>Deposit</Text>
-          </Button>
-        </FooterTab>
-        <FooterTab>
-          <Button onPress={this.withdraw}>
-            <Icon name="arrow-round-down" />
-            <Text>Withdraw</Text>
-          </Button>
-        </FooterTab>
-        <FooterTab>
-          <Button onPress={this.exchange}>
-            <Icon name="swap" />
-            <Text>Exchange</Text>
-          </Button>
-        </FooterTab>
-      </Footer>
+      <Footer
+        onAdd={this.addAccount}
+        onDeposit={this.deposit}
+        onWithdraw={this.withdraw}
+        onExchange={this.exchange}
+      />
     )
   }
 

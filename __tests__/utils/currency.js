@@ -38,7 +38,6 @@ describe('Currency Utility Functions Test', () => {
         convertedValue: 10,
       }
     };
-    console.log(convertAllBalance(balance, 'USD', rates));
     expect(convertAllBalance(balance, 'USD', rates)).toEqual(expected);
   });
 })
