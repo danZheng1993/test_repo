@@ -4,6 +4,7 @@ import set from 'lodash.set';
 
 import { AccountActionTypes as actions } from '../actions/account';
 import { TransactionHistoryActionTypes as thActions } from '../actions/transactionHistory';
+import { ExchangeRateActionTypes as erActions } from '../actions/exchangeRate';
 import { convertCurrency } from '../../utils/currency';
 import { selectRates, selectBalance } from './selectors';
 
@@ -43,6 +44,9 @@ export function* addAccount(action) {
       amount: get(action.payload, 'initialAmount', 0),
       timeStamp: new Date(),
     }
+  })
+  yield put({
+    type: erActions.FetchRate,
   })
 }
 
