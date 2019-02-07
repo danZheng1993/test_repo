@@ -9,7 +9,7 @@ export function* authenticate(action) {
   if (type === 'TouchID') {
     try {
       const isSupported = yield call(TouchID.isSupported);
-      if (isSupported === 'FaceID' || isSupported === 'TouchID') {
+      if (isSupported === 'FaceID' || isSupported === 'TouchID' || isSupported === true) {
         const result = yield call(TouchID.authenticate);
         if (result) {
           yield put({ type: AuthActionTypes.AuthenticationSuccess })
@@ -67,7 +67,7 @@ export function* authorize(action) {
   if (type === 'TouchID') {
     try {
       const isSupported = yield call(TouchID.isSupported);
-      if (isSupported === 'FaceID' || isSupported === 'TouchID') {
+      if (isSupported === 'FaceID' || isSupported === 'TouchID' || isSupported === true) {
         const result = yield call(TouchID.authenticate);
         if (result) {
           if (success) {
