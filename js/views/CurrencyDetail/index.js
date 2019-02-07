@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import get from 'lodash.get';
 import takeRight from 'lodash.takeright';
+import { Title } from 'native-base';
 
 import PageTemplate from '../../components/PageTemplate';
 import Footer from '../../components/Footer'
-import Balance from './components/Balance';
+import Balance from '../../components/Balance';
 import ConversionRate from './components/ConversionRate';
 import TransactionHistory from '../../components/TransactionHistory';
 import DepositModal from '../../templates/DepositModal';
@@ -88,6 +89,7 @@ class CurrencyDetailScreen extends React.Component {
         {
           !isDefault && <ConversionRate conversionRate={conversionRate} convertedValue={convertedValue} defaultCurrency={defaultCurrency} />
         }
+        <Title style={{ marginVertical: 16 }}>Transaction History</Title>
         <TransactionHistory history={history} />
         <DepositModal show={showDeposit} onClose={this.closeModals} currency={currency} />
         <WithdrawModal show={showWithdraw} onClose={this.closeModals} currency={currency} />

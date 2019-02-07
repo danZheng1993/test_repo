@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { Card, CardItem } from 'native-base';
 
-import { H1, H2, H3, Text } from 'native-base';
+import { H3, Text, Icon } from 'native-base';
+import { highlightColor, disabledColor } from '../../../style/color';
 
 const styles = {
   wrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    padding: 16,
+    flex: 1,
   },
   leftPart: {
     flex: 1,
@@ -16,35 +18,31 @@ const styles = {
     flex: 1,
     flexDirection: 'column',
   },
-  horizontalTexts: {
+  horizontalAlign: {
+    flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }
 }
 
-export default ({ balance, conversionRate, convertedValue, currency, isDefault, defaultCurrency, onPress }) => (
-  <TouchableOpacity style={styles.wrapper} onPress={onPress}>
-    <View style={styles.leftPart}>
-      <H1>{currency}</H1>
-      <View style={styles.horizontalTexts}>
-        <H2>Balance:</H2><H2>{balance.toFixed(2)}</H2>
-      </View>
-    </View>
-    {
-      isDefault ? (
-        <H1>Default Currency</H1>
-      ) : (
-        <View style={styles.rightPart}>
-          <View style={styles.horizontalTexts}>
-            <Text>Conversion Rate(with {defaultCurrency}):</Text>
-            <H3>{conversionRate.toFixed(2)}</H3>
-          </View>
-          <View style={styles.horizontalTexts}>
-            <Text>In {defaultCurrency}:</Text>
-            <H3>{convertedValue.toFixed(2)}</H3>
-          </View>
+export default ({ balance, conversionRate, currency, isDefault, defaultCurrency, onPress, onSetDefault }) => (
+  <Card>
+    <CardItem>
+      <TouchableOpacity style={styles.wrapper} onPress={onPress}>
+        <View style={[styles.horizontalAlign, { marginBottom: 16 }]}>
+          <Text>
+            <Text>Currency: </Text><H3>{currency}</H3>
+          </Text>
+          <TouchableOpacity onPress={onSetDefault}>
+            <Icon name="star" style={{ color : isDefault ? highlightColor : disabledColor}} />
+          </TouchableOpacity>
         </View>
-      )
-    }
-  </TouchableOpacity>
+        <View style={styles.horizontalAlign}>
+          <H3>{balance.toFixed(2)}</H3>
+          {!isDefault && <Text>Rate: {conversionRate.toFixed(2)} ({defaultCurrency})</Text>}
+        </View>
+      </TouchableOpacity>
+    </CardItem>
+  </Card>
 )

@@ -3,6 +3,17 @@ import { View } from 'react-native';
 import { Text } from 'native-base';
 import moment from 'moment';
 
+const styles = {
+  wrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e3e3e3',
+    padding: 8,
+  },
+
+}
+
 export default ({ info }) => {
   let resultString = '';
   switch(info.type) {
@@ -36,9 +47,9 @@ export default ({ info }) => {
   }
   const { timeStamp } = info;
   return (
-    <View>
+    <View style={styles.wrapper}>
       <Text>{resultString}</Text>
-      <Text>{moment(timeStamp).format('dddd, MMMM Do YYYY, h:mm:ss a')}</Text>
+      <Text>{moment(timeStamp).format('YYYY-M-D hh:mm:ss')}</Text>
     </View>
   )
 }

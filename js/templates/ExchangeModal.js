@@ -83,7 +83,6 @@ class ExchangeModal extends React.Component {
   }
 
   changeTargetCurrency = (targetCurrency) => {
-    console.log(targetCurrency);
     this.setState({ targetCurrency })
   }
 

@@ -4,6 +4,7 @@ import { Text } from 'native-base';
 import { View, FlatList } from 'react-native';
 
 import HistoryItem from './HistoryItem';
+import { borderColor } from '../style/color';
 
 const styles = {
   emptyWrapper: {
@@ -31,6 +32,7 @@ export default class TransactionHistory extends React.PureComponent {
     const { history } = this.props;
     return (
       <FlatList
+        style={{ borderTopWidth: 1, borderTopColor: borderColor }}
         data={history}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}

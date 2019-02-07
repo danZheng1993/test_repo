@@ -11,9 +11,9 @@ describe('TransactionHistory Action Test', () => {
   it('Check AddHistory Action', () => {
     const expectedAction = {
       type: types.AddHistory,
-      payload: { transaction: historyItems[0] }
+      payload: historyItems[0]
     };
-    expect(AddHistory({ transaction: historyItems[0] })).toEqual(expectedAction);
+    expect(AddHistory(historyItems[0])).toEqual(expectedAction);
   });
 })
 
@@ -22,7 +22,7 @@ describe('ExchangeRate Reducer Test', () => {
     const expectedData = {
       history: [historyItems[0]],
     };
-    const action = AddHistory({ transaction: historyItems[0] });
+    const action = AddHistory(historyItems[0]);
     expect(historyReducer(initialState, action)).toEqual(expectedData);
   });
 })

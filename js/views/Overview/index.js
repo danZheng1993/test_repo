@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import PageTemplate from '../../components/PageTemplate';
 import Footer from '../../components/Footer';
-import TotalBalance from './components/TotalBalance';
+import Balance from '../../components/Balance';
 import BalanceOverview from './components/BalanceOverview';
 import DepositModal from '../../templates/DepositModal';
 import WithdrawModal from '../../templates/WithdrawModal';
@@ -56,7 +56,7 @@ class OverviewScreen extends React.Component {
     const { showDeposit, showExchange, showWithdraw, showNewAccount } = this.state;
     return (
       <PageTemplate footer={this.renderFooter()}>
-        <TotalBalance currency={defaultCurrency} balance={totalBalance} />
+        <Balance currency={defaultCurrency} balance={totalBalance} />
         <BalanceOverview balance={balance} defaultCurrency={defaultCurrency} />
         <DepositModal show={showDeposit} onClose={this.closeModals} />
         <WithdrawModal show={showWithdraw} onClose={this.closeModals} />

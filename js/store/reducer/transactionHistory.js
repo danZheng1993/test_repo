@@ -11,7 +11,7 @@ const initialState = {
 export default handleActions({
   [actions.AddHistory]: (state, action) =>
     produce(state, draft => {
-      const { transaction } = action.payload;
+      const transaction = action.payload;
       const history = [...state.history];
       history.push(transaction);
       draft.history = takeRight(history, 100);
