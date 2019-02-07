@@ -18,7 +18,7 @@ react-native run-ios
 ```
 
 
-#Instructions
+# Instructions
 
 If your device is FaceID, FingerPrint Authenticated, then you can just pass the Authorization and Authentication Progress.
 If not then you have to input the passcode.
